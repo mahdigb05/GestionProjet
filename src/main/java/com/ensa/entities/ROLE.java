@@ -2,5 +2,5 @@ package com.ensa.entities;
 
 public enum ROLE {
 
-    ADMIN,AGENT,ETUDIANT
+    ROLE_ADMIN,ROLE_AGENT,ROLE_ETUDIANT
 }

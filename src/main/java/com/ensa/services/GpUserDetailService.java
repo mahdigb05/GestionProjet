@@ -27,7 +27,7 @@ public class GpUserDetailService implements UserDetailsService {
             Utilisateur utilisateur = new Utilisateur();
             utilisateur.setEmail(email);
             utilisateur.setPassword(passwordEncoder.encode("admin"));
-            utilisateur.setRole(ROLE.ADMIN);
+            utilisateur.setRole(ROLE.ROLE_ADMIN);
             return new GpUserDetail(utilisateur);
         }
 
