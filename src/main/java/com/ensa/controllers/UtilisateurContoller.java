@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
 import javax.websocket.server.PathParam;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("gestionProjet/utilisateur")
@@ -37,19 +38,20 @@ public class UtilisateurContoller {
         return new ResponseEntity(utilisateur1, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id_utilisateur}")
+    @DeleteMapping("/{id}")
     @RolesAllowed({"AGENT","ADMIN"})
-    public ResponseEntity<?> supprimerUtilisateur(@PathVariable("{id_utilisateur}") Long idUtilisateur){
-        Utilisateur utilisateur = utilisateurService.supprimerUtilisateur(idUtilisateur);
-        if(utilisateur == null)
-            return new ResponseEntity("l'utilisateur n'existe pas",HttpStatus.BAD_REQUEST);
-        return new ResponseEntity(utilisateur,HttpStatus.OK);
+    public ResponseEntity<?> supprimerUtilisateur(@PathVariable Long id){
+        //Utilisateur utilisateur = utilisateurService.supprimerUtilisateur(idUtilisateur);
+        System.out.println(id);
+        utilisateurService.supprimerUtilisateur(id);
+        return new ResponseEntity("Supprimer !!",HttpStatus.OK);
     }
 
     @GetMapping("/")
     @RolesAllowed({"AGENT","ADMIN"})
-    public ResponseEntity<?> listUtilisateur(){
-        return new ResponseEntity<>(utilisateurService.getListUtilisateur(),HttpStatus.OK);
+    public Collection<?> listUtilisateur(){
+        Collection<Utilisateur> listeUtilisateurs = utilisateurService.getListUtilisateur();
+        return listeUtilisateurs;
     }
 
     @GetMapping("/{id_utilisateur}")

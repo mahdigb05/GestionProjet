@@ -34,13 +34,9 @@ public class UtilisateurService {
         return utilisateur;
     }
 
-    public Utilisateur supprimerUtilisateur(Long code){
-        Utilisateur utilisateur = utilisateurRepo.findById(code).orElse(null);
-        if(utilisateur != null){
-            utilisateurRepo.delete(utilisateur);
-            return utilisateur;
-        }
-        return null;
+    public void supprimerUtilisateur(Long code){
+        //Utilisateur utilisateur = utilisateurRepo.findById(code).orElse(null);
+        utilisateurRepo.deleteById(code);
     }
 
     public List<Utilisateur> getListUtilisateur(){
