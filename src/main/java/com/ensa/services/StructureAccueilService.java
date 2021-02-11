@@ -27,13 +27,9 @@ public class StructureAccueilService {
         return structureAccueil;
     }
 
-    public StructureAccueil supprimerStructureAccueil(Long code){
-        StructureAccueil structure = structureAccueilRepo.findById(code).orElse(null);
-        if(structure != null){
-            structureAccueilRepo.delete(structure);
-            return structure;
-        }
-        return null;
+    public void supprimerStructureAccueil(Long code){
+        //StructureAccueil structure = structureAccueilRepo.findById(code).orElse(null);
+        structureAccueilRepo.deleteById(code);
     }
 
     public List<StructureAccueil> getListStructureAccueil(){

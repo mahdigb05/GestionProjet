@@ -9,7 +9,7 @@ import java.util.List;
 public class Rapport {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idRapport;
     @Column
     private String sujet;

@@ -5,6 +5,7 @@ import com.ensa.services.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
@@ -12,14 +13,19 @@ import javax.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("gestionProjet/utilisateur")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UtilisateurContoller {
 
     @Autowired
     private UtilisateurService utilisateurService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostMapping("/")
     @RolesAllowed({"AGENT","ADMIN"})
     public ResponseEntity<?> ajouterUtilisateur(@RequestBody Utilisateur utilisateur){
+        utilisateur.setPassword(passwordEncoder.encode(utilisateur.getPassword()));
         Utilisateur utilisateur1 = utilisateurService.ajouterUtilisateur(utilisateur);
         return new ResponseEntity(utilisateur1, HttpStatus.CREATED);
     }
