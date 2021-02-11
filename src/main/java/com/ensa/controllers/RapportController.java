@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("gestionProjet/rapport")
+@CrossOrigin(origins = "http://localhost:3000")
 public class RapportController {
 
     @Autowired

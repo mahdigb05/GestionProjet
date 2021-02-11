@@ -19,7 +19,8 @@ public class Utilisateur {
     private String email;
     @Column
     private String password;
-    @Column
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private ROLE role;
     @OneToMany(mappedBy = "utilisateur")
     private List<Rapport> rapports;
