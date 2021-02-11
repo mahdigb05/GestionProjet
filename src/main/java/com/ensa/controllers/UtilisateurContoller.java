@@ -12,8 +12,9 @@ import javax.annotation.security.RolesAllowed;
 import javax.websocket.server.PathParam;
 import java.util.Collection;
 
+
 @RestController
-@RequestMapping("gestionProjet/utilisateur")
+@RequestMapping("/gestionProjet/utilisateur")
 @CrossOrigin(origins = "http://localhost:3000")
 public class UtilisateurContoller {
 
@@ -24,7 +25,6 @@ public class UtilisateurContoller {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/")
-    @RolesAllowed({"AGENT","ADMIN"})
     public ResponseEntity<?> ajouterUtilisateur(@RequestBody Utilisateur utilisateur){
         utilisateur.setPassword(passwordEncoder.encode(utilisateur.getPassword()));
         Utilisateur utilisateur1 = utilisateurService.ajouterUtilisateur(utilisateur);

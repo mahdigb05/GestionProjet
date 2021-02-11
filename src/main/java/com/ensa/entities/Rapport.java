@@ -111,4 +111,20 @@ public class Rapport {
     public void setJury(List<MembreJury> jury) {
         this.jury = jury;
     }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
+
+    public StructureAccueil getStructureAccueil() {
+        return structureAccueil;
+    }
+
+    public void setStructureAccueil(StructureAccueil structureAccueil) {
+        this.structureAccueil = structureAccueil;
+    }
 }

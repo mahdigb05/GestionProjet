@@ -7,35 +7,48 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.annotation.security.RolesAllowed;
-import javax.websocket.server.PathParam;
-import java.util.List;
+import java.util.Collection;
+
 
 @RestController
-@RequestMapping("gestionProjet/rapport")
 @CrossOrigin(origins = "http://localhost:3000")
 public class RapportController {
 
     @Autowired
     private RapportService rapportService;
 
-    @PostMapping("/")
+    @PostMapping("/rapport")
     @RolesAllowed({"ETUDIANT"})
-    public ResponseEntity<?> ajouterRapport(@RequestBody Rapport rapport){
-        Rapport rapport1 = rapportService.ajouterRapport(rapport);
+    public ResponseEntity<?> ajouterRapport(@RequestParam("file") MultipartFile file,
+                                            @RequestParam("idStructure") Long idStructure,
+                                            @RequestParam("email") String email,
+                                            @RequestParam ("filiere") String filier,
+                                            @RequestParam ("sujet") String sujet){
+        Rapport rapport1 = rapportService.ajouterRapport(file,idStructure,email,filier,sujet);
         return new ResponseEntity(rapport1,HttpStatus.CREATED);
     }
 
-    @PutMapping("/")
+    @PutMapping("/rapport")
     @RolesAllowed({"ETUDIANT","AGENT","ADMIN"})
+//    public ResponseEntity<?> modifierRapport(@RequestParam(value = "file", required = false) MultipartFile file,
+//                                             @RequestParam("idStructure") Long idStructure,
+//                                             @RequestParam("email") String email,
+//                                             @RequestParam ("filiere") String filier,
+//                                             @RequestParam ("sujet") String sujet,
+//                                             @RequestParam ("idRapport") Long idRapport){
+//        Rapport rapport1 = rapportService.modifierRapport(file,idStructure,email,filier,sujet,idRapport);
+//        return new ResponseEntity(rapport1,HttpStatus.OK);
+//    }
     public ResponseEntity<?> modifierRapport(@RequestBody Rapport rapport){
-        Rapport rapport1 = rapportService.modifierRapport(rapport);
-        return new ResponseEntity(rapport1,HttpStatus.OK);
+        rapportService.modifierRapport(rapport);
+        return new ResponseEntity(rapport,HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id_rapport}")
+    @DeleteMapping("/rapport/{id_rapport}")
     @RolesAllowed({"ETUDIANT","AGENT","ADMIN"})
     public ResponseEntity<?> supprimerRapport(@PathVariable("{id_rapport}") Long idRapport){
         Rapport rapport = rapportService.supprimerRapport(idRapport);
@@ -44,13 +57,13 @@ public class RapportController {
         return new ResponseEntity(rapport,HttpStatus.OK);
     }
 
-    @GetMapping("/")
+    @GetMapping("/rapport")
     @RolesAllowed({"ETUDIANT","AGENT","ADMIN"})
-    public ResponseEntity<?> listRapport(){
-        return new ResponseEntity<>(rapportService.getListRapport(),HttpStatus.OK);
+    public Collection<?> listRapport(){
+        return rapportService.getListRapport();
     }
 
-    @GetMapping("/{id_rapport}")
+    @GetMapping("/rapport/{id_rapport}")
     @RolesAllowed({"ETUDIANT","AGENT","ADMIN"})
     public ResponseEntity<?> getRapport(@PathVariable("{id_rapport}") Long idRapport){
         Rapport rapport = rapportService.getRapport(idRapport);
@@ -65,9 +78,16 @@ public class RapportController {
 //
 //    }
 
-    @GetMapping(value = "/{id_rapport}", params = "archive")
+    @GetMapping(value = "/rapport/", params = "archive")
     public ResponseEntity<?> getRapportArchiver(){
         return new ResponseEntity<>(rapportService.getListRapportArchive(),HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/rapport/{id_rapport}", params = "archiver")
+    @RolesAllowed({"AGENT","ADMIN"})
+    public ResponseEntity<?> archiverRapport(@PathVariable Long idRapport){
+        Rapport rapport = rapportService.archiverRapport(idRapport);
+        return new ResponseEntity<>(rapport,HttpStatus.OK);
     }
 
 }

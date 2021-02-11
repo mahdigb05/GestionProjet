@@ -1,6 +1,8 @@
 package com.ensa.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -16,6 +18,7 @@ public class StructureAccueil {
     private String nomStructure;
     private String tel;
     @OneToMany(mappedBy = "structureAccueil")
+    @JsonIgnore
     private List<Rapport> rapport;
 
     public StructureAccueil(Long idStructure, String adresse, String description, String email, String nomStructure, String tel) {

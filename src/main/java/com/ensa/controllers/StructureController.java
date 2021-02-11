@@ -14,8 +14,8 @@ import javax.websocket.server.PathParam;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("gestionProjet/structure")
 @CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("gestionProjet/structure")
 public class StructureController {
 
     @Autowired
@@ -35,15 +35,17 @@ public class StructureController {
         return new ResponseEntity(structure1, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{idStructure}")
+    @DeleteMapping("/{id_structure}")
     @RolesAllowed({"AGENT","ADMIN"})
-    public ResponseEntity<?> supprimerStructure(@PathVariable Long idStructure){
+    public ResponseEntity<?> supprimerStructure(@PathVariable("{id_structure}") Long idStructure){
         structureAccueilService.supprimerStructureAccueil(idStructure);
-        return new ResponseEntity("Sturucture supprimer !!",HttpStatus.OK);
+//        if(structure == null)
+//            return new ResponseEntity("la structure n'existe pas",HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(" supprimer avec succes",HttpStatus.OK);
     }
 
     @GetMapping("/")
-    @RolesAllowed({"AGENT","ADMIN"})
+    @RolesAllowed({"AGENT","ADMIN","ETUDIANT"})
     public Collection<?> listStructure(){
         Collection<StructureAccueil> listeStructures = structureAccueilService.getListStructureAccueil();
         return listeStructures;

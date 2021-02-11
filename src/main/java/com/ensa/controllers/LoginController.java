@@ -36,6 +36,8 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+
+
         try{
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),authenticationRequest.getPassword())
@@ -48,7 +50,7 @@ public class LoginController {
         }
         final GpUserDetail userDetail = gpUserDetailService.loadUserByUsername(authenticationRequest.getEmail());
         final String jwt = jwtUtil.generateToken(userDetail);
-        AuthenticationResponse authenticationResponse = new AuthenticationResponse(jwt, userDetail.getUtilisateur().getRole());
+        AuthenticationResponse authenticationResponse = new AuthenticationResponse(jwt, userDetail.getUtilisateur().getRole(),userDetail.getUsername());
         return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
     }
 }
