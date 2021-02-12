@@ -50,11 +50,10 @@ public class RapportController {
 
     @DeleteMapping("/rapport/{id_rapport}")
     @RolesAllowed({"ETUDIANT","AGENT","ADMIN"})
-    public ResponseEntity<?> supprimerRapport(@PathVariable("{id_rapport}") Long idRapport){
+    public ResponseEntity<?> supprimerRapport(@PathVariable("id_rapport") Long idRapport){
+
         Rapport rapport = rapportService.supprimerRapport(idRapport);
-        if(rapport == null)
-            return new ResponseEntity("le rapport n'existe pas",HttpStatus.BAD_REQUEST);
-        return new ResponseEntity(rapport,HttpStatus.OK);
+        return new ResponseEntity("rapport supprimer avec succes",HttpStatus.OK);
     }
 
     @GetMapping("/rapport")
@@ -83,9 +82,9 @@ public class RapportController {
         return new ResponseEntity<>(rapportService.getListRapportArchive(),HttpStatus.OK);
     }
 
-    @PostMapping(value = "/rapport/{id_rapport}", params = "archiver")
-    @RolesAllowed({"AGENT","ADMIN"})
-    public ResponseEntity<?> archiverRapport(@PathVariable Long idRapport){
+    @PostMapping(value = "/rapport/{idRapport}", params = "archiver")
+    @RolesAllowed({"AGENT"})
+    public ResponseEntity<?> archiverRapport(@PathVariable("idRapport") Long idRapport){
         Rapport rapport = rapportService.archiverRapport(idRapport);
         return new ResponseEntity<>(rapport,HttpStatus.OK);
     }
