@@ -60,7 +60,9 @@ public class RapportController {
     @GetMapping("/rapport")
     @RolesAllowed({"ETUDIANT","AGENT","ADMIN"})
     public Collection<?> listRapport(){
-        return rapportService.getListRapport();
+        Collection<Rapport> rapports = rapportService.getListRapport();
+
+        return rapports;
     }
 
     @GetMapping("/rapport/{id_rapport}")
@@ -78,9 +80,10 @@ public class RapportController {
 //
 //    }
 
-    @GetMapping(value = "/rapport/", params = "archive")
-    public ResponseEntity<?> getRapportArchiver(){
-        return new ResponseEntity<>(rapportService.getListRapportArchive(),HttpStatus.OK);
+    @GetMapping("/rapportArchiver")
+    public Collection<?> getRapportArchiver(){
+        Collection<Rapport> rapportsArchiver = rapportService.getListRapportArchive();
+        return rapportsArchiver;
     }
 
     @PostMapping(value = "/rapport/{id_rapport}", params = "archiver")
