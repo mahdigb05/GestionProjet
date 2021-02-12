@@ -24,9 +24,10 @@ public class Utilisateur {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private ROLE role;
-    @OneToMany(mappedBy = "utilisateur")
+
     @JsonIgnore
     private List<Rapport> rapports;
+
 
     public Utilisateur() {
     }
@@ -88,11 +89,11 @@ public class Utilisateur {
         this.role = role;
     }
 
-    public List<Rapport> getRapports() {
+/*    public List<Rapport> getRapports() {
         return rapports;
     }
 
     public void setRapports(List<Rapport> rapports) {
         this.rapports = rapports;
-    }
+    }*/
 }
