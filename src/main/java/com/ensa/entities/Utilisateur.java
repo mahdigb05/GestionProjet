@@ -2,6 +2,8 @@ package com.ensa.entities;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -22,9 +24,10 @@ public class Utilisateur {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private ROLE role;
-    /*
-    @OneToMany(mappedBy = "utilisateur")
-    private List<Rapport> rapports;*/
+
+    @JsonIgnore
+    private List<Rapport> rapports;
+
 
     public Utilisateur() {
     }
